@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -60,6 +59,14 @@ const ClimateModels: React.FC = () => {
       keyTechnologies: "Decentralized Fusion, Community Grids"
     }
   ];
+
+  // Custom tooltip component wrapper to satisfy TypeScript
+  const CustomTooltip = (props: any) => {
+    if (!props.active || !props.payload) {
+      return null;
+    }
+    return <ChartTooltipContent {...props} />;
+  };
 
   return (
     <div className="p-6">
@@ -129,7 +136,7 @@ const ClimateModels: React.FC = () => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="year" />
               <YAxis label={{ value: 'Gt CO₂', position: 'insideLeft', angle: -90, dy: 50 }} />
-              <Tooltip content={(props) => <ChartTooltipContent {...props} />} />
+              <Tooltip content={CustomTooltip} />
               <Legend />
               <Line 
                 type="monotone" 
