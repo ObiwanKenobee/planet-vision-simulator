@@ -2,12 +2,21 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { LayoutDashboard, Leaf, CloudLightning, Droplets, Users, FileText, BarChart3 } from 'lucide-react';
+import { 
+  LayoutDashboard, 
+  Leaf, 
+  CloudLightning, 
+  Droplets, 
+  Users, 
+  FileText, 
+  BarChart3 
+} from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
 
 interface NavItem {
   label: string;
   icon: React.ReactNode;
-  active?: boolean;
+  href: string;
 }
 
 interface SidebarNavProps {
@@ -16,14 +25,16 @@ interface SidebarNavProps {
 }
 
 const SidebarNav: React.FC<SidebarNavProps> = ({ collapsed, className }) => {
+  const location = useLocation();
+  
   const navItems: NavItem[] = [
-    { label: 'Dashboard', icon: <LayoutDashboard className="h-5 w-5" />, active: true },
-    { label: 'Energy Research', icon: <CloudLightning className="h-5 w-5" /> },
-    { label: 'Ocean Cleanup', icon: <Droplets className="h-5 w-5" /> },
-    { label: 'Climate Models', icon: <Leaf className="h-5 w-5" /> },
-    { label: 'Communities', icon: <Users className="h-5 w-5" /> },
-    { label: 'Validation', icon: <FileText className="h-5 w-5" /> },
-    { label: 'Reports', icon: <BarChart3 className="h-5 w-5" /> },
+    { label: 'Dashboard', icon: <LayoutDashboard className="h-5 w-5" />, href: '/' },
+    { label: 'Energy Research', icon: <CloudLightning className="h-5 w-5" />, href: '/energy-research' },
+    { label: 'Ocean Cleanup', icon: <Droplets className="h-5 w-5" />, href: '/ocean-cleanup' },
+    { label: 'Climate Models', icon: <Leaf className="h-5 w-5" />, href: '/climate-models' },
+    { label: 'Communities', icon: <Users className="h-5 w-5" />, href: '/communities' },
+    { label: 'Validation', icon: <FileText className="h-5 w-5" />, href: '/validation' },
+    { label: 'Reports', icon: <BarChart3 className="h-5 w-5" />, href: '/reports' },
   ];
 
   return (
@@ -41,20 +52,28 @@ const SidebarNav: React.FC<SidebarNavProps> = ({ collapsed, className }) => {
         </div>
       </div>
       <div className="space-y-1 px-2">
-        {navItems.map((item, index) => (
-          <Button
-            key={index}
-            variant={item.active ? "secondary" : "ghost"}
-            className={cn(
-              "w-full justify-start",
-              collapsed ? "px-2" : "px-3",
-              item.active && "bg-sidebar-accent text-sidebar-accent-foreground"
-            )}
-          >
-            {item.icon}
-            {!collapsed && <span className="ml-3">{item.label}</span>}
-          </Button>
-        ))}
+        {navItems.map((item) => {
+          const isActive = location.pathname === item.href || 
+                          (item.href !== '/' && location.pathname.startsWith(item.href));
+          
+          return (
+            <Button
+              key={item.href}
+              variant={isActive ? "secondary" : "ghost"}
+              className={cn(
+                "w-full justify-start",
+                collapsed ? "px-2" : "px-3",
+                isActive && "bg-sidebar-accent text-sidebar-accent-foreground"
+              )}
+              asChild
+            >
+              <Link to={item.href}>
+                {item.icon}
+                {!collapsed && <span className="ml-3">{item.label}</span>}
+              </Link>
+            </Button>
+          );
+        })}
       </div>
     </nav>
   );
