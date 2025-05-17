@@ -5,11 +5,14 @@ import Header from '@/components/Header';
 import Sidebar from '@/components/Sidebar';
 import SidebarNav from '@/components/SidebarNav';
 import Dashboard from '@/pages/Dashboard';
+import UserMenu from '@/components/UserMenu';
+import { useNavigate } from 'react-router-dom';
 
 const Index: React.FC = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
 
   // Set initial dark mode based on user preference
   useEffect(() => {
@@ -19,6 +22,14 @@ const Index: React.FC = () => {
       document.documentElement.classList.add('dark');
     }
   }, []);
+
+  // Check for authentication on mount
+  useEffect(() => {
+    const authData = localStorage.getItem('nef-auth');
+    if (!authData) {
+      navigate('/landing');
+    }
+  }, [navigate]);
 
   // Handle theme toggle
   const toggleTheme = () => {
@@ -55,6 +66,7 @@ const Index: React.FC = () => {
           subtitle="Vision Simulation Dashboard"
           onToggleTheme={toggleTheme}
           isDarkMode={isDarkMode}
+          rightContent={<UserMenu />}
         />
         <main>
           <Dashboard />
