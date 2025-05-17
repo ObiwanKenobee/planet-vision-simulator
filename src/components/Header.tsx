@@ -10,6 +10,7 @@ interface HeaderProps {
   onToggleTheme: () => void;
   isDarkMode: boolean;
   className?: string;
+  rightContent?: React.ReactNode;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -18,6 +19,7 @@ const Header: React.FC<HeaderProps> = ({
   onToggleTheme,
   isDarkMode,
   className,
+  rightContent,
 }) => {
   return (
     <div className={cn('flex items-center justify-between py-4 px-4', className)}>
@@ -29,6 +31,7 @@ const Header: React.FC<HeaderProps> = ({
         <Button variant="outline" size="icon" onClick={onToggleTheme}>
           {isDarkMode ? <Sun className="h-4 w-4" /> : <MoonStar className="h-4 w-4" />}
         </Button>
+        {rightContent}
       </div>
     </div>
   );
