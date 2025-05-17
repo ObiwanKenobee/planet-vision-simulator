@@ -2,7 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { Flask, AtomIcon } from 'lucide-react';
+import { Beaker, AtomIcon } from 'lucide-react';
 
 const EnergyResearch: React.FC = () => {
   const researchProjects = [
@@ -49,7 +49,7 @@ const EnergyResearch: React.FC = () => {
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center">
-              <Flask className="mr-2 h-5 w-5 text-energy" />
+              <Beaker className="mr-2 h-5 w-5 text-energy" />
               Research Velocity
             </CardTitle>
             <CardDescription>AI-accelerated experimental iterations</CardDescription>

@@ -3,8 +3,8 @@ import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Leaf, CloudSun } from 'lucide-react';
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, CartesianGrid, Legend } from 'recharts';
+import { ChartContainer, ChartTooltipContent } from "@/components/ui/chart";
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, CartesianGrid, Legend, Tooltip } from 'recharts';
 
 const ClimateModels: React.FC = () => {
   const emissionData = [
@@ -129,9 +129,7 @@ const ClimateModels: React.FC = () => {
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="year" />
               <YAxis label={{ value: 'Gt CO₂', position: 'insideLeft', angle: -90, dy: 50 }} />
-              <ChartTooltip
-                content={props => <ChartTooltipContent {...props} />}
-              />
+              <Tooltip content={(props) => <ChartTooltipContent {...props} />} />
               <Legend />
               <Line 
                 type="monotone" 
